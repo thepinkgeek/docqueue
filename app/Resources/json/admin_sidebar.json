@@ -1,0 +1,88 @@
+{	
+	"sideBarMenuItems" : [
+							{
+								"name" : "Patient",
+								"class" : "",
+								"id" : "patientqueue",
+								"subItems" : [
+												{
+													"name" : "View Queue",
+													"href" : "#",
+													"class" : "",
+													"id" : "viewqueue",
+													"goto" : "/admin/viewqueue"
+												},
+												{
+													"name" : "Add Patient",
+													"href" : "#",
+													"class" : "",
+													"id" : "addpatient",
+													"goto" : "/admin/addpatient"
+												},
+												{
+													"name" : "Open Queue",
+													"href" : "#",
+													"class" : "",
+													"id" : "openqueue",
+													"goto" : "/admin/openqueue"
+												},
+												{
+													"name" : "Close Queue",
+													"href" : "#",
+													"class" : "",
+													"id" : "closequeue",
+													"goto" : "/admin/closequeue"
+												},
+												{
+													"name" : "Cancel All Appointments",
+													"href" : "#",
+													"class" : "",
+													"id" : "cancelallappointments",
+													"goto" : "/admin/resetqueue"
+												}
+										 	]
+							},
+							{
+								"name" : "Doctor",
+								"class" : "",
+								"id" : "doctor",
+								"subItems" : [
+												{
+													"name" : "The Doctor is In!",
+													"href" : "#",
+													"class" : "",
+													"id" : "thedoctorisin",
+													"goto" : "/admin/thedoctorisin"
+												},
+												{
+													"name" : "The Doctor is Out!",
+													"href" : "#",
+													"class" : "",
+													"id" : "thedoctorisout",
+													"goto" : "/admin/thedoctorisout"
+												}
+										 	 ]
+							},
+							{
+								"name" : "Maintenance",
+								"class" : "",
+								"id" : "maintenance",
+								"subItems" : [
+												{
+													"name" : "Add Administrators",
+													"href" : "#",
+													"class" : "",
+													"id" : "addadmin",
+													"goto" : "/admin/addadmin"
+												},
+												{
+													"name" : "History Logs",
+													"href" : "#",
+													"class" : "",
+													"id" : "historylogs",
+													"goto" : "/admin/historylog"
+												}
+										 	 ]
+							}
+					]
+}

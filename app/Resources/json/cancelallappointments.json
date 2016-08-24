@@ -1,0 +1,10 @@
+{
+	"modals": [
+				{
+					"id" : "cancelallappointmentsconfirm",
+					"header" : "Cancel Appointment",
+					"text" : "Are you sure you want to cancel all appointments?",
+					"type" : "yesNoModal"	
+				}
+			  ]
+}

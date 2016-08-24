@@ -1,0 +1,30 @@
+<form action="" type="post" id="addappointmentform" submitAction="/user/addappointmentsubmit">
+    <fieldset class="form-group">
+    <label for="consultationtype">Is the appointment set for the dependent/s?</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="dependentYesAdmin" value="yes" checked>
+        Yes.
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="dependentNoAdmin" value="no">
+         No.
+      </label>
+    </div>
+  </fieldset>
+  <div class="form-group" id="dependentname">
+    <label for="dependentname">Dependent's Name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="namehelp" placeholder="">
+    <small id="namehelp" class="form-text text-muted"></small>
+  </div>
+
+  <div class="form-group" id="addpatientemail">
+  
+    <label for="dependentname">Email</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="namehelp" placeholder="">
+    <small id="namehelp" class="form-text text-muted"></small>
+  </div>
+  <button type="submit" class="btn btn-lexmark-black" id="appointmentsubmitbutton">Set Appointment</button>
+</form>

@@ -1,0 +1,49 @@
+<nav class="mainnav">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="index.html">Menu</a>
+
+    </div>  
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      	{% for menuItem in menu %}
+        {% if menuItem.subItems|length == 0 %}
+            <li class="{{menuItem.class}}"><a href="{{menuItem.href}}">{{ menuItem.menuName }}
+                {% if menuItem.srOnly == true %}
+                    <span class="sr-only">(current)</span></a>
+                {% endif %}
+            </li>
+        {% else %}
+            <li class="dropdown {{menuItem.class}}">
+                <a href="{{menuItem.href}}" class="dropdown-toggle"
+                            data-toggle="dropdown"
+                            role="button"
+                            aria-expanded="false">{{ menuItem.menuName }}<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    {% for subitem in menuItem.subItems %}
+                        <li><a href="{{subitem.href}}">{{subitem.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+     
+      {% if userName is defined %}
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="logout.html">Logout</a></li> 
+        </ul>
+      {% endif %}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

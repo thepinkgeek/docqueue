@@ -1,0 +1,5 @@
+{% include 'templates/header.twig' %}
+{% include 'templates/navigation.twig' %}
+{% include 'templates/sidebar.twig' %}
+{% include 'templates/table.twig' %}
+{% include 'templates/footer.twig' %}

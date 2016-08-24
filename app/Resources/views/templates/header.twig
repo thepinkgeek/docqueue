@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>DocQueue</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/main.js') }}"></script>
+</head>
+<body>
+<header>
+	<div class="container">
+		<div class="col-xs-12 col-md-8 logo">
+			<img src="{{ asset('images/lexmarklogo.png') }}" title="Lexmark" alt="Lexmark">
+			<h1>DocQueue version 0.0</h1>
+		</div>
+		
+		{% if userName is defined %}
+			<div class="col-xs-12 col-md-3 pull-right  text-right"> 
+	    	<h6>Welcome, {{userName}}</h6>
+	    	</div>
+	    {% endif %}
+	</div>
+</header>

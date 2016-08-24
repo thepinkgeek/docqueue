@@ -1,0 +1,38 @@
+{
+	"labels" : [
+					{ "name" : "Patients in Queue" }
+			   ],
+	"table" : {
+				"headers" : [
+								{ "name" : "#" },
+								{ "name" : "Name" },
+								{ "name" : "Email Address" },
+								{
+									"name" : "",
+									"span" : 2
+								}
+							],
+				"rows": [
+								[
+									{
+										"name" : "1",
+										"isHeader" : true
+									},
+									{
+										"name" : "Angelee Pinzon"
+									},
+									{
+										"name" : "anpinzon@lexmark.com"
+									},
+									{
+										"name" : "Finish",
+										"href" : "#"
+									},
+									{
+										"name" : "Cancel",
+										"href" : "#"
+									}
+								]
+						]
+			  }
+}

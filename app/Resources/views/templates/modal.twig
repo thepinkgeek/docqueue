@@ -1,0 +1,27 @@
+{% if modals is defined %}
+{% for modal in modals %}
+<!-- Modal -->
+<div id="{{ modal.id }}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{ modal.header }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ modal.text }}</p>
+      </div>
+      <div class="modal-footer">
+      	{% if modal.type == "yesNoModal" %}
+			<button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        {% else %}
+        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}

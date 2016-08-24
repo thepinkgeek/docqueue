@@ -1,0 +1,26 @@
+{	
+	"sideBarMenuItems" : [
+	    					{
+	    					 	"name" : "Appointment",   
+	    					 	"id" : "appointment",
+	    					 	"class" : "",
+	    					 	"subItems" :
+	    					 	[
+	    					  		{
+										"name" : "Set Appointment",
+										"id" : "setappointment",
+										"href" : "",
+										"class" : "",
+										"goto" : "/user/addappointment"
+							  		},
+							  		{
+										"name" : "See Appointment Details",
+										"id" : "viewappointment",
+										"href" : "",
+										"class" : "",
+										"goto" : "/user/viewappointment"
+							  		}
+	    					 	]
+	    					}
+						 ]
+}

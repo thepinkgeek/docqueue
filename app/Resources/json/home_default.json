@@ -1,0 +1,12 @@
+{
+	"appName"  : "DocQueue",
+	"menu" : [
+				{ 
+				 	"menuName" : "Home",
+				 	"href" : "#",
+				 	"class" : "active",
+				 	"srOnly" : true, 
+				 	"subItems" : [] 
+				}
+			 ]
+}

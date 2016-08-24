@@ -1,0 +1,183 @@
+/* START: TP Hero @font-face */
+@font-face {
+  font-family: 'tpHerolight';
+  src: url('../tphero-font/tphero-light-webfont.eot');
+  src: url('../tphero-font/tphero-light-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-light-webfont.woff2') format('woff2'), url('../tphero-font/tphero-light-webfont.woff') format('woff'), url('../tphero-font/tphero-light-webfont.ttf') format('truetype'), url('../tphero-font/tphero-light-webfont.svg#tp_herolight') format('svg');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'tpHerolightitalic';
+  src: url('../tphero-font/tphero-lightitalic-webfont.eot');
+  src: url('../tphero-font/tphero-lightitalic-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-lightitalic-webfont.woff2') format('woff2'), url('../tphero-font/tphero-lightitalic-webfont.woff') format('woff'), url('../tphero-font/tphero-lightitalic-webfont.ttf') format('truetype'), url('../tphero-font/tphero-lightitalic-webfont.svg#tp_herolight_italic') format('svg');
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'tpHeroregular';
+  src: url('../tphero-font/tphero-regular-webfont.eot');
+  src: url('../tphero-font/tphero-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-regular-webfont.woff2') format('woff2'), url('../tphero-font/tphero-regular-webfont.woff') format('woff'), url('../tphero-font/tphero-regular-webfont.ttf') format('truetype'), url('../tphero-font/tphero-regular-webfont.svg#tp_heroregular') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'tpHeroregularitalic';
+  src: url('../tphero-font/tphero-regularitalic-webfont.eot');
+  src: url('../tphero-font/tphero-regularitalic-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-regularitalic-webfont.woff2') format('woff2'), url('../tphero-font/tphero-regularitalic-webfont.woff') format('woff'), url('../tphero-font/tphero-regularitalic-webfont.ttf') format('truetype'), url('../tphero-font/tphero-regularitalic-webfont.svg#tp_heroregular_italic') format('svg');
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'tpHeromedium';
+  src: url('../tphero-font/tphero-medium-webfont.eot');
+  src: url('../tphero-font/tphero-medium-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-medium-webfont.woff2') format('woff2'), url('../tphero-font/tphero-medium-webfont.woff') format('woff'), url('../tphero-font/tphero-medium-webfont.ttf') format('truetype'), url('../tphero-font/tphero-medium-webfont.svg#tp_heromedium') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'tpHeromediumitalic';
+  src: url('../tphero-font/tphero-mediumitalic-webfont.eot');
+  src: url('../tphero-font/tphero-mediumitalic-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-mediumitalic-webfont.woff2') format('woff2'), url('../tphero-font/tphero-mediumitalic-webfont.woff') format('woff'), url('../tphero-font/tphero-mediumitalic-webfont.ttf') format('truetype'), url('../tphero-font/tphero-mediumitalic-webfont.svg#tp_heromedium_italic') format('svg');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'tpHerosemibold';
+  src: url('../tphero-font/tphero-semibold-webfont.eot');
+  src: url('../tphero-font/tphero-semibold-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-semibold-webfont.woff2') format('woff2'), url('../tphero-font/tphero-semibold-webfont.woff') format('woff'), url('../tphero-font/tphero-semibold-webfont.ttf') format('truetype'), url('../tphero-font/tphero-semibold-webfont.svg#tp_herosemibold') format('svg');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'tpHerosemibolditalic';
+  src: url('../tphero-font/tphero-semibolditalic-webfont.eot');
+  src: url('../tphero-font/tphero-semibolditalic-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-semibolditalic-webfont.woff2') format('woff2'), url('../tphero-font/tphero-semibolditalic-webfont.woff') format('woff'), url('../tphero-font/tphero-semibolditalic-webfont.ttf') format('truetype'), url('../tphero-font/tphero-semibolditalic-webfont.svg#tp_herosemibold_italic') format('svg');
+  font-weight: 600;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'tpHerobold';
+  src: url('../tphero-font/tphero-bold-webfont.eot');
+  src: url('../tphero-font/tphero-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-bold-webfont.woff2') format('woff2'), url('../tphero-font/tphero-bold-webfont.woff') format('woff'), url('../tphero-font/tphero-bold-webfont.ttf') format('truetype'), url('../tphero-font/tphero-bold-webfont.svg#tp_herobold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'tpHerobolditalic';
+  src: url('../tphero-font/tphero-bolditalic-webfont.eot');
+  src: url('../tphero-font/tphero-bolditalic-webfont.eot?#iefix') format('embedded-opentype'), url('../tphero-font/tphero-bolditalic-webfont.woff2') format('woff2'), url('../tphero-font/tphero-bolditalic-webfont.woff') format('woff'), url('../tphero-font/tphero-bolditalic-webfont.ttf') format('truetype'), url('../tphero-font/tphero-bolditalic-webfont.svg#tp_herobold_italic') format('svg');
+  font-weight: 700;
+  font-style: italic;
+}
+.lxksprite{ background-image:url('../images/sprite.png'); }
+a{color: #008944}
+body{ font-family: 'tpHeroregular';}
+header{ padding: 15px 0}
+.logo img{ height: 30px;  float: left; }
+.logo h1 {
+  float: left;
+  margin: 10px 0 0 30px;
+  font-size: 14px;
+}
+.navbar-nav>li>a{  padding-top: 10px;
+  padding-bottom: 10px;}
+.list-group-item{  padding: 8px 15px;}
+.collapse a.list-group-item { text-align: right !important}
+
+.collapse.in a.list-group-item.collapsed .caret {
+  margin-left: 10px;
+}
+.collapse.in a.list-group-item {
+  text-align: right;
+  padding-right: 15px;
+}
+
+.mainnav{ background: #008944; margin-bottom:15px;min-height: 10px;}
+ul.nav > li > a,
+.dropdown-menu>li>a,
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover,
+a.list-group-item-success:focus, a.list-group-item-success:hover,
+#loginbox .panel-heading {
+color:#fff;
+}
+ul.nav > li.active,
+ul.nav > li> a:hover,
+.nav>li>a:focus,
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover,
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover,
+a.list-group-item-success:focus, a.list-group-item-success:hover,
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{ background: #006346;}
+#loginbox .panel-heading,
+.navbar-nav>li>.dropdown-menu{ background: #008944;}
+ .pagination>li>a, .pagination>li>span{color:#008944}
+img.footerlogo {
+  float: left;
+  margin: 10px;
+  padding-right: 15px;
+  border-right: 1px solid #666;
+}
+.cright p {
+  margin: 0;
+  line-height: 18px;
+  font-size: 10px;
+font-family: 'tpHerobold';
+}
+.cright > p:first-of-type{margin-top: 7px;}
+img.cebuit {
+   float: right;
+  margin-left: 15px;
+  margin-top: 8px;
+}
+.powered p {
+  margin: 10px;
+  font-size: 12px;
+}
+
+.icons{ width: 110px; margin: 0 auto;}
+.mozzilla{ background-position: 0 0; float: left; width: 24px; height: 24px;}
+.chrome{ background-position: -64px 0; float: left; width: 24px; height: 24px;}
+.ie{ background-position: -32px 0; float: left; width: 24px; height: 24px;}
+.ic{ margin: 0 5px }
+.panel{border-radius: 0px}
+.list-group-item-success{ background-color: transparent;}
+.suportedbrowser{margin-top:10px; text-align:center}
+.suportedbrowser h5{ font-size:12px;}
+
+.panel a span.caret {float: right;margin-top: 9px;}
+div#loginbox {
+  margin-bottom: 100px;
+}
+.btn-lexmark-black{
+  color: #fff;
+  background-color: #000;
+  border-color: #111;
+  display: block;
+  text-transform: uppercase;
+  line-height: 25px;
+}
+.btn-lxk-black{
+  color: #fff;
+  background-color: #000;
+  border-color: #111; 
+  text-transform: uppercase;
+  line-height: 25px;
+}
+.btn-lexmark-black:hover {
+  color: #fff;
+  background: #222;
+}
+.pagination{ margin: 0}
+
+.open>.dropdown-menu {
+  display: block;
+  background: #008944;
+}
+article {
+  font-size: 12px;
+}
+footer {
+  padding: 10px 0;
+}
+.navbar-toggle .icon-bar{   background-color: #fff; }
+.navbar-brand{color: #fff;}
+@media (min-width: 768px){.navbar-brand{ display: none}}

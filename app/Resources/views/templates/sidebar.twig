@@ -1,0 +1,29 @@
+<aside class="col-xs-12 col-md-3 logo">
+<div id="MainMenu">
+  <div class="list-group panel">
+     {% for item in sideBarMenuItems %}
+  	 <a href="#{{ item.id }}"
+		class="list-group-item list-group-item-success" 
+  	    data-toggle="collapse"
+  	    data-parent="#MainMenu">{{ item.name }}
+  	    {% if item.subItems is defined and item.subItems|length > 0 %}
+  	    	<span class="caret"></span>
+  	    {% endif %}
+  	 </a>
+  	 {% if item.subItems is defined and item.subItems|length > 0 %}
+     <div class="collapse" id="{{ item.id }}">
+     {% for subItem in item.subItems %}
+      <a href="{{ subItem.href }}"
+		 class="list-group-item {{ subItem.class }}"
+      	 data-toggle="collapse"
+      	 data-parent="#SubMenu1"
+      	 id="{{ subItem.id }}"
+      	 {% if subItem.goto is defined %}goto="{{ subItem.goto }}{% endif %}">{{ subItem.name }}
+      </a>
+      {% endfor %}
+     </div>
+    {% endif %}
+  	{% endfor %}
+  </div>
+</div>
+</aside>

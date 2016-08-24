@@ -1,0 +1,29 @@
+{
+	"labels" : [
+					{ "name" : "Appointments" }
+			   ],
+	"table" : {
+				"headers" : [
+								{ "name" : "#" },
+								{ "name" : "Name" },
+								{ "name" : "Action" }
+							],
+				"rows": [
+								[
+									{
+										"name" : "1",
+										"isHeader" : true
+									},
+									{
+										"name" : "Angelee Pinzon"
+									},
+									{
+										"name" : "Cancel",
+										"href" : "#",
+										"class" : "cancelschedule",
+										"id" : "cancelschedule"
+									}
+								]
+						]
+			  }
+}
