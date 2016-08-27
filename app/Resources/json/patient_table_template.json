@@ -1,0 +1,18 @@
+{
+	"labels" : [
+					{ "name" : "Patients in Queue" }
+			   ],
+	"table" : {
+				"headers" : [
+								{ "name" : "#" },
+								{ "name" : "Name" },
+								{ "name" : "Email Address" },
+								{
+									"name" : "",
+									"span" : 2
+								}
+							],
+				"rows": [
+						]
+			  }
+}

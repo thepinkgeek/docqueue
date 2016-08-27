@@ -39,9 +39,9 @@
         {% endfor %}
       </ul>
      
-      {% if userName is defined %}
+      {% if app.session.get("username") is defined and app.session.get("username") != ""%}
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="logout.html">Logout</a></li> 
+            <li><a href="/index/logout">Logout</a></li> 
         </ul>
       {% endif %}
     </div><!-- /.navbar-collapse -->

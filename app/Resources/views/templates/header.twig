@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{{ asset('js/jquery.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
 </head>
@@ -19,9 +19,9 @@
 			<h1>DocQueue version 0.0</h1>
 		</div>
 		
-		{% if userName is defined %}
+		{% if app.session.get("displayname") is defined and app.session.get("displayname") != "" %}
 			<div class="col-xs-12 col-md-3 pull-right  text-right"> 
-	    	<h6>Welcome, {{userName}}</h6>
+	    	<h6>Welcome, {{ app.session.get("username") }}</h6>
 	    	</div>
 	    {% endif %}
 	</div>
