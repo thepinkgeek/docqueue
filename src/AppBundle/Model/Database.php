@@ -99,9 +99,12 @@ class Database
 		$sql = "SELECT id, name, email FROM Patient";
 		$result = $conn->query($sql);
 		if ($result ->num_rows > 0) {
+			$index = 0;
 			while($row = $result->fetch_assoc())
 			{
+				$row["isFirst"] = $index == 0;
 				call_user_func_array($className."::$callBack", array(&$context, $row));
+				$index++;
 			}
 		}
 

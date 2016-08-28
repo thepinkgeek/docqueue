@@ -1,0 +1,70 @@
+{	
+	"sideBarMenuItems" : [
+							{
+								"name" : "Patient",
+								"class" : "",
+								"id" : "patientqueue",
+								"subItems" : [
+												{
+													"name" : "Add Patient",
+													"href" : "#",
+													"class" : ""
+												},
+												{
+													"name" : "Open Queue",
+													"href" : "#",
+													"class" : ""
+												},
+												{
+													"name" : "Close Queue",
+													"href" : "#",
+													"class" : ""
+												},
+												{
+													"name" : "Cancel All Appointments",
+													"href" : "#",
+													"class" : ""
+												}
+										 	]
+							},
+							{
+								"name" : "Doctor",
+								"class" : "",
+								"id" : "doctor",
+								"subItems" : [
+												{
+													"name" : "The Doctor is In!",
+													"href" : "#",
+													"class" : ""
+												},
+												{
+													"name" : "Edit Details",
+													"href" : "#",
+													"class" : ""
+												},
+												{
+													"name" : "The Doctor is Out!",
+													"href" : "#",
+													"class" : ""
+												}
+										 	 ]
+							},
+							{
+								"name" : "Maintenance",
+								"class" : "",
+								"id" : "maintenance",
+								"subItems" : [
+												{
+													"name" : "Add Administrators",
+													"href" : "#",
+													"class" : ""
+												},
+												{
+													"name" : "History Logs",
+													"href" : "#",
+													"class" : ""
+												}
+										 	 ]
+							}
+					]
+}

@@ -6,16 +6,54 @@ $(document).ready(function() {
 	$("section").delegate("#dependentYes", "click", function(e){ $("#dependentname").show(); });
 	$("section").delegate("#dependentNo", "click", function(e){ $("#dependentname").hide(); });
 	$("section").delegate("#dependentYesAdmin", "click", function(e){
-																		$("#dependentname").show(); 
 																		$("#addpatientemail").hide();
 																	});
+
+	$("#cancelappointmentconfirm").on("show.bs.modal", function(event) {
+																		var link = $("#" + event.relatedTarget.id).attr("goto");
+																		console.log(link);
+																	   });
+	$("#finishappointmentconfirm").on("show.bs.modal", function(event) {
+																		var link = $("#" + event.relatedTarget.id).attr("goto");
+																		console.log(link);
+																	   });
+
+	/***
+	$("section").delegate(".finish", "click", function(e){
+															e.preventDefault();
+															$.ajax({
+																	url: $("#" + e.target.id).attr("goto"),
+																	context: document.body
+																	}).done(function(response) {
+																			$("#ajaxcontainer").html(response);
+																			});
+														 });
+
+	$("section").delegate(".cancel", "click", function(e){
+															e.preventDefault();
+															$("#cancelappointmentconfirm").modal().show();
+															$.ajax({
+																	url: $("#" + e.target.id).attr("goto"),
+																	context: document.body
+																	}).done(function(response) {
+																			$("#ajaxcontainer").html(response);
+																			});
+														 });
+	***/
+
 	$("section").delegate("#dependentNoAdmin", "click", function(e){
-																	$("#dependentname").hide();
-																	$("#addpatientemail").show();
+																		$("#addpatientemail").show();
 																   });
 	$("section").delegate("#appointmentsubmitbutton", "click", function(e){
 																			e.preventDefault();
-																			console.log("appointmentsubmitbutton");
+																			console.log($('#addappointmentform').attr("action"));
+																			 $.ajax({
+																		            	type: 'post',
+																		            	url: $('#addappointmentform').attr("action"),
+																		            	data: $('#addappointmentform').serialize(),
+																		            	success: function(response){ $("#ajaxcontainer").html(response);
+																		             }
+																			 })
 																		  });
 	$("section").delegate(".cancelschedule", "click", function(e){
 																   e.preventDefault(); 
@@ -54,6 +92,7 @@ $(document).ready(function() {
 												  		context: document.body
 													}).done(function(response) {
 														$("#ajaxcontainer").html(response);
+														$("#addpatientemail").hide();
 													});
 										   });
 

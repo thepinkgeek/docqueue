@@ -45,8 +45,12 @@ class UserController extends Controller
 		$sidebardata = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/admin_sidebar.json'), true);
 		$navigationData = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/home_default.json'), true);
 		$modalData = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/cancelallappointments.json'), true);
+		$finishappointmentsModal = 0;
+		$cancelappointmentsModal = 0;
+		$this->getJsonFile("cancelappointmentadmin.json", $cancelappointmentsModal);
+		$this->getJsonFile("finishappointment.json", $finishappointmentsModal);
 		$tabledata = $this->populatePatientData();
-		$template_data = array_merge($sidebardata, $navigationData, $tabledata, $modalData);
+		$template_data = array_merge($sidebardata, $navigationData, $tabledata, $this->concatenateModals(array($finishappointmentsModal, $cancelappointmentsModal, $modalData)));
 		return $this->render("admin_index.twig", $template_data);
 	}
 	
@@ -73,11 +77,17 @@ class UserController extends Controller
 		
 		$data = array(array("name"=>$id, "isHeader"=>true),
 					  array("name"=>$name),
-					  array("name"=>$email),
-					  array("name"=>"Finish", "href"=>$finishHref),
-					  array("name"=>"Cancel", "href"=>$cancelHref)
-					  );
+					  array("name"=>$email));
 		
+		if($rowData["isFirst"])
+		{
+			array_push($data, array("name"=>"Finish", "href"=>$finishHref, "class"=>'finish', "id"=>"patient-".$id, "toggle"=>"modal", "popupId"=>"#finishappointmentconfirm"));
+		}
+		else
+		{
+			array_push($data, array("name"=>""));
+		}
+		array_push($data, array("name"=>"Cancel", "href"=>$cancelHref, "class"=>"cancel", "id"=>"patient-".$id, "toggle"=>"modal", "popupId"=>"#cancelappointmentconfirm"));
 		array_push($tableData["table"]["rows"], $data);
 	}
 	
@@ -91,10 +101,34 @@ class UserController extends Controller
 		{
 			return $this->redirect("/index/index");
 		}
+		$cancelappointmentsModal = 0;
+		$finishappointmentsModal = 0;
+		$this->getJsonFile("cancelappointmentadmin.json", $cancelappointmentsModal);
+		$this->getJsonFile("finishappointment.json", $finishappointmentsModal);
+
 		$tabledata = $this->populatePatientData();
-		return $this->render("templates/table.twig", $tabledata);
+		$data = array_merge($tabledata, $this->concatenateModals(array($finishappointmentsModal, $cancelappointmentsModal)));
+		return $this->render("patient_table.twig", $data);
 	}
 	
+	private function getJsonFile($fileName, &$container)
+	{
+		$jsonFileName = $this->get('kernel')->getRootDir().'/Resources/json/'.$fileName;
+		$container = json_decode(file_get_contents($jsonFileName), true);
+	}
+	
+	private function concatenateModals($modalgroups)
+	{
+		$final = array("modals"=>array());
+		foreach($modalgroups as $modalgroup)
+		{
+			foreach($modalgroup["modals"] as $modal)
+			{
+				array_push($final["modals"], $modal);
+			}
+		}
+		return $final;
+	}
 	/**
 	 * @Route("/admin/addpatient")
 	 */
@@ -141,22 +175,42 @@ class UserController extends Controller
 	public function addAppointmentSubmit()
 	{
 		$role = new Roles();
-		if(!$role->isUser($this->get("session")->get("username")))
+		$username = $this->get("session")->get("username");
+		if(!$role->isUser($username))
 		{
 			return $this->redirect("/index/index");
 		}
 
 		$request = Request::createFromGlobals();
-		$email = $this->generateUserEmail();
+		$email = $this->generateUserEmail($username);
 		$name = $request->request->get("name");
 		$db = new Database();
 		$db->insert($name, $email);
 		return $this->viewAppointment();
 	}
 	
-	private function generateUserEmail()
+	/**
+	 * @Route("/admin/addappointmentsubmit")
+	 */
+	public function adminAddAppointmentSubmit()
 	{
-		return $this->get("session")->get("username") + "@lexmark.com";
+		$role = new Roles();
+		if(!$role->isUser($this->get("session")->get("username")))
+		{
+			return $this->redirect("/index/index");
+		}
+
+		$request = Request::createFromGlobals();
+		$email = $this->generateUserEmail($request->request->get("username"));
+		$name = $request->request->get("name");
+		$db = new Database();
+		$db->insert($name, $email);
+		return $this->viewPatientQueue();
+	}
+	
+	private function generateUserEmail($username)
+	{
+		return $username."@lexmark.com";
 	}
 
 	/**
@@ -328,6 +382,8 @@ class UserController extends Controller
 		$tabledata = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/sample_table.json'), true); // this is sample data. generate data from database query.
 		return $this->render("templates/table.twig", $tabledata);
 	}
+	
+	
 }
 
 ?>

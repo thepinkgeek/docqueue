@@ -10,12 +10,14 @@ class Roles
 	
 	public function getRole($username)
 	{
+		/***
 		if($username == "")
 			return "";
 		else
 		{
+		**/
 			return "Admin";
-		}
+		//}
 	}
 	
 	public function isAdmin($username)
