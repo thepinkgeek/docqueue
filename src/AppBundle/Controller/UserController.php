@@ -81,13 +81,13 @@ class UserController extends Controller
 		
 		if($rowData["isFirst"])
 		{
-			array_push($data, array("name"=>"Finish", "href"=>$finishHref, "class"=>'finish', "id"=>"patient-".$id, "toggle"=>"modal", "popupId"=>"#finishappointmentconfirm"));
+			array_push($data, array("name"=>"Finish", "href"=>$finishHref, "class"=>'finish', "id"=>"finishpatient-".$id, "toggle"=>"modal", "popupId"=>"#finishappointmentconfirm"));
 		}
 		else
 		{
 			array_push($data, array("name"=>""));
 		}
-		array_push($data, array("name"=>"Cancel", "href"=>$cancelHref, "class"=>"cancel", "id"=>"patient-".$id, "toggle"=>"modal", "popupId"=>"#cancelappointmentconfirm"));
+		array_push($data, array("name"=>"Cancel", "href"=>$cancelHref, "class"=>"cancel", "id"=>"cancelpatient-".$id, "toggle"=>"modal", "popupId"=>"#cancelappointmentconfirm"));
 		array_push($tableData["table"]["rows"], $data);
 	}
 	
@@ -228,18 +228,11 @@ class UserController extends Controller
 		$request = Request::createFromGlobals();
 		$email = $request->query->get("email");
 		$name = $request->query->get("name");
-
-		if($username == $email)
-		{
-			$db = new Database();
-			$db->delete($name, $email);
-			$data = $this->populatePatientData();
-			$this->sendCancelEmail($email);
-			return $this->render("templates/table.twig", $data);
-		}
-		else {
-			return $this->redirect("/user/index");
-		}
+        $db = new Database();
+        $db->delete($name, $email);
+        $data = $this->populatePatientData();
+        $this->sendCancelEmail($email);
+        return $this->render("templates/table.twig", $data);
 	}
 	
 	private function sendCancelEmail($email)
@@ -291,20 +284,6 @@ class UserController extends Controller
 	}
 
 	/**
-	 * @Route("/admin/addaddministrator")
-	 */
-	public function addAdmin()
-	{
-		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
-		{
-			return $this->redirect("/index/index");
-		}
-		$data = json_decode(file_get_contents('json/user_sidebar.json'), true);
-		return $this->render("user_index.twig", $data);
-	}
-	
-	/**
 	 * @Route("/admin/openqueue")
 	 */
 	public function openQueue()
@@ -353,7 +332,8 @@ class UserController extends Controller
 		{
 			return $this->redirect("/index/index");
 		}
-		return $this->viewPatientQueue();
+		
+		return $this->render('templates/thedoctorisin.twig');
 	}
 	
 	/**
@@ -382,8 +362,28 @@ class UserController extends Controller
 		$tabledata = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/sample_table.json'), true); // this is sample data. generate data from database query.
 		return $this->render("templates/table.twig", $tabledata);
 	}
+
+	/**
+	 * @Route("/admin/addadmin")
+	 */
+	public function addAdmin()
+	{
+		$role = new Roles();
+		if(!$role->isAdmin($this->get("session")->get("username")))
+		{
+			return $this->redirect("/index/index");
+		}
+		return $this->render("templates/addadmin.twig");
+	}
 	
-	
+	/**
+	 * @Route("/admin/generatesidebar")
+	 */
+	public function generateSideBar()
+	{
+		$sidebarData = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/admin_sidebar.json'), true);
+		return $this->render("templates/sidebar.twig", $sidebarData);
+	}
 }
 
 ?>

@@ -31,7 +31,9 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     {% for subitem in menuItem.subItems %}
-                        <li><a href="{{subitem.href}}">{{subitem.name}}</a></li>
+                    	{% if subitem.enabled is not defined or subitem.enabled %}
+                        	<li><a href="{{subitem.href}}">{{subitem.name}}</a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </li>

@@ -42,7 +42,7 @@
           	{% else %}
 				<td>
 				{% if data.href is defined %}
-          			<a href="{% if data.popupId is defined %}{{ data.popupId }}{% endif %}"{% if data.toggle is defined %}data-toggle="{{ data.toggle }}"{% endif %}goto="{{ data.href }}" {% if data.class is defined %} class="{{ data.class }}" {% endif %} 
+          			<a href="{% if data.popupId is defined %}{{ data.popupId }}{% endif %}"goto="{{ data.href }}" {% if data.class is defined %} class="{{ data.class }}" {% endif %} 
           			{% if data.id is defined %} id="{{ data.id}}" {% endif %}>{{ data.name }}</a>
           		{% else %}
           		    {{ data.name }}

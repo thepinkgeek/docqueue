@@ -8,29 +8,27 @@ $(document).ready(function() {
 	$("section").delegate("#dependentYesAdmin", "click", function(e){
 																		$("#addpatientemail").hide();
 																	});
-    /***
 
+    /**
 	$("#cancelappointmentconfirm").on("show.bs.modal", function(event) {
 																		var link = $("#" + event.relatedTarget.id).attr("goto");
 																		console.log(link);
-                                                                        console.log(event);
 																	   });
 	$("#finishappointmentconfirm").on("show.bs.modal", function(event) {
 																		var link = $("#" + event.relatedTarget.id).attr("goto");
 																		console.log(link);
-                                                                        console.log(event);
 																	   });
-    ***/
+    **/
 
 	$("section").delegate(".finish", "click", function(e){
 															e.preventDefault();
-                                                            $("#finishappointmentconfirm-confirmyes").attr("goto",
+                                                            $("#finishappointmentconfirm #confirmyes").attr("goto",
                                                                                                      $("#" + e.target.id).attr("goto"));
                                                             $("#finishappointmentconfirm").modal().show();
                                                             
 														 });
-	
-    $("section").delegate("#finishappointmentconfirm-confirmyes", "click", function(e) {
+
+    $("section").delegate("#finishappointmentconfirm #confirmyes", "click", function(e) {
         e.preventDefault();
         $.ajax({
 				url: $("#" + e.target.id).attr("goto"),
@@ -40,21 +38,17 @@ $(document).ready(function() {
 			                              });
     });
 
-    $("section").delegate("#cancelappointmentconfirm-confirmyes", "click", function(e) {
-        e.preventDefault();
-        $.ajax({
-				url: $("#" + e.target.id).attr("goto"),
-                context: document.body
-			   }).done(function(response) {
-										    $("#ajaxcontainer").html(response);
-			                              });
-    });
+    $("#finishappointmentconfirm #confirmyes")
 
 	$("section").delegate(".cancel", "click", function(e){
 															e.preventDefault();
-                                                            $("#cancelappointmentconfirm-confirmyes").attr("goto",
-                                                                                                     $("#" + e.target.id).attr("goto"));
 															$("#cancelappointmentconfirm").modal().show();
+															$.ajax({
+																	url: $("#" + e.target.id).attr("goto"),
+																	context: document.body
+																	}).done(function(response) {
+																			$("#ajaxcontainer").html(response);
+																			});
 														 });
 
 	$("section").delegate("#dependentNoAdmin", "click", function(e){
@@ -123,26 +117,6 @@ $(document).ready(function() {
 														$("#ajaxcontainer").html(response);
 													});
 										   });
-	
-	$("#thedoctorisin").click(function(e){
-											 var location = $("#thedoctorisin").attr("goto"); 
-											 $.ajax({
-												  		url: location,
-												  		context: document.body
-													}).done(function(response) {
-														$("#ajaxcontainer").html(response);
-													});
-										   });
 
-	$("#addadmin").click(function(e){
-											 var location = $("#addadmin").attr("goto"); 
-											 $.ajax({
-												  		url: location,
-												  		context: document.body
-													}).done(function(response) {
-														$("#ajaxcontainer").html(response);
-													});
-										   });
 
-	
 });

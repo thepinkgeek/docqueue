@@ -147,5 +147,39 @@ class Database
 		
 		return $rc;
 	}
+	
+	public function hasEntryDoctor()
+	{
+		$rc = false;
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "SELECT id FROM DoctorOnDuty LIMIT 1";
+		$result = $conn->query($sql);
+		$rc = $result->num_rows > 0;
+		$conn->close();
+		
+		return $rc;
+	}
+	
+	public function hasEntryQueue()
+	{
+		$rc = false;
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "SELECT id FROM QueueStatus LIMIT 1";
+		$result = $conn->query($sql);
+		$rc = $result->num_rows > 0;
+		$conn->close();
+		
+		return $rc;
+	}
 }
 ?>
