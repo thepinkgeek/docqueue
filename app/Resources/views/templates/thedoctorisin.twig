@@ -1,11 +1,16 @@
 <form action="" method="post">
   <div class="form-group">
     <label for="doctorname">Doctor Name</label>
-    <input type="email" class="form-control" id="doctorname" placeholder="Enter doctor's name here.">
+    <input type="email" class="form-control" id="doctorname" placeholder="Enter doctor's name here." name="doctorname">
   </div>
   <div class="form-group">
-    <label for="doctortime">Time</label>
-    <input data-provide="timepicker" type="datetime" class="form-control" id="doctortime" placeholder="Time">
+    <label for="doctortime">Time From</label>
+    <input data-provide="timepicker" type="datetime" class="form-control" id="doctortimefrom" placeholder="Time" name="doctortimefrom">
   </div>
+  <div class="form-group">
+    <label for="doctortime">Time To</label>
+    <input data-provide="timepicker" type="datetime" class="form-control" id="doctortimeto" placeholder="Time" name="doctortimeto">
+  </div>
+
   <button type="submit" class="btn btn-default">Submit</button>
 </form>

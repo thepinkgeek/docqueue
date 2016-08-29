@@ -181,5 +181,113 @@ class Database
 		
 		return $rc;
 	}
+	
+	public function addQueueEntry()
+	{
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "INSERT INTO QueueStatus (status)
+          VALUES ('open')";
+
+		$result = $conn->query($sql);
+		$conn->close();
+		
+		return $result;
+	}
+	
+	public function addDoctorEntry($name, $time)
+	{
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "INSERT INTO Doctoronduty (name, time)
+          VALUES ('". $name . "', '" . $time. "')";
+
+		$result = $conn->query($sql);
+		$conn->close();
+		
+		return $result;
+	}
+	
+	public function deleteQueueEntry()
+	{
+		$rc = true;
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		 
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		// delete a record
+		$sql = "DELETE FROM Queuestatus WHERE id in (SELECT id FROM Queuestatus LIMIT 1)";
+	
+		$rc = $conn->query($sql);
+		$conn->close();
+		
+		return $rc;
+	}
+	
+	public function deleteDoctorEntry()
+	{
+		$rc = true;
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		 
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		// delete a record
+		$sql = "DELETE FROM Doctoronduty WHERE id in (SELECT id FROM Doctoronduty LIMIT 1)";
+	
+		$rc = $conn->query($sql);
+		$conn->close();
+		
+		return $rc;
+	}
+	
+	public function resetPatientQueue()
+	{
+		$rc = true;
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		 
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "DELETE FROM Patient";
+		$rc = $conn->query($sql);
+
+		$sql = "ALTER TABLE Patient AUTO_INCREMENT = 1";
+		$rc = $conn->query($sql);
+		
+		$conn->close();
+		
+		return $rc;
+	}
+	
+	public function addAdmin($username)
+	{
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "INSERT INTO Administrators (username)
+          VALUES ('". $username . "')";
+
+		$result = $conn->query($sql);
+		$conn->close();
+		
+		return $result;
+
+	}
 }
 ?>

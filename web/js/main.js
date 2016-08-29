@@ -42,6 +42,18 @@ $(document).ready(function() {
 
     $("section").delegate("#cancelappointmentconfirm-confirmyes", "click", function(e) {
         e.preventDefault();
+        console.log($("#" + e.target.id).attr("goto"));
+        $.ajax({
+				url: $("#" + e.target.id).attr("goto"),
+                context: document.body
+			   }).done(function(response) {
+										    $("#ajaxcontainer").html(response);
+			                              });
+    });
+
+    $("section").delegate("#cancelallappointmentsconfirm-confirmyes", "click", function(e) {
+        e.preventDefault();
+        console.log($("#" + e.target.id).attr("goto"));
         $.ajax({
 				url: $("#" + e.target.id).attr("goto"),
                 context: document.body
@@ -60,6 +72,7 @@ $(document).ready(function() {
 	$("section").delegate("#dependentNoAdmin", "click", function(e){
 																		$("#addpatientemail").show();
 																   });
+
 	$("section").delegate("#appointmentsubmitbutton", "click", function(e){
 																			e.preventDefault();
 																			console.log($('#addappointmentform').attr("action"));
@@ -80,6 +93,8 @@ $(document).ready(function() {
 
 	$("#cancelallappointments").click(function(e){
 													e.preventDefault(); 
+													$("#cancelallappointmentsconfirm-confirmyes").attr("goto",
+                                                                                                    $("#" + e.target.id).attr("goto"));
 													$("#cancelallappointmentsconfirm").modal().show();
 												 });
 
@@ -131,8 +146,18 @@ $(document).ready(function() {
 												  		context: document.body
 													}).done(function(response) {
 														$("#ajaxcontainer").html(response);
+													});
+										   });
+	
+	$("#thedoctorisinsubmit").click(function(e){
+											 var location = $("#thedoctorisin").attr("goto"); 
+											 $.ajax({
+												  		url: location,
+												  		context: document.body
+													}).done(function(response) {
+														$("#ajaxcontainer").html(response);
 														$("#thedoctorisin").hide();
-														$("#thedoctorisout").hide();
+														$("#thedoctorisout").show();
 													});
 										   });
 
@@ -167,8 +192,8 @@ $(document).ready(function() {
 												  		context: document.body
 													}).done(function(response) {
 														$("#ajaxcontainer").html(response);
-														$("#closequeue").show();
-														$("#openqueue").hide();
+														$("#closequeue").hide();
+														$("#openqueue").show();
 													});
 										   });
 

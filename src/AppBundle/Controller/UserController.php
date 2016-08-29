@@ -319,7 +319,11 @@ class UserController extends Controller
 		{
 			return $this->redirect("/index/index");
 		}
-		return $this->viewPatientQueue();
+		
+		$db = new Database();
+		$db->resetPatientQueue();
+        $data = $this->populatePatientData();
+        return $this->render("templates/table.twig", $data);
 	}
 	
 	/**
