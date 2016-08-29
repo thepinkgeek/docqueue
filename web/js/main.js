@@ -131,6 +131,44 @@ $(document).ready(function() {
 												  		context: document.body
 													}).done(function(response) {
 														$("#ajaxcontainer").html(response);
+														$("#thedoctorisin").hide();
+														$("#thedoctorisout").hide();
+													});
+										   });
+
+	$("#thedoctorisout").click(function(e){
+											 var location = $("#thedoctorisout").attr("goto"); 
+											 $.ajax({
+												  		url: location,
+												  		context: document.body
+													}).done(function(response) {
+														$("#ajaxcontainer").html(response);
+														$("#thedoctorisin").show();
+														$("#thedoctorisout").hide();
+													});
+										   });
+
+	$("#openqueue").click(function(e){
+											 var location = $("#openqueue").attr("goto"); 
+											 $.ajax({
+												  		url: location,
+												  		context: document.body
+													}).done(function(response) {
+														$("#ajaxcontainer").html(response);
+														$("#closequeue").show();
+														$("#openqueue").hide();
+													});
+										   });
+
+	$("#closequeue").click(function(e){
+											 var location = $("#closequeue").attr("goto"); 
+											 $.ajax({
+												  		url: location,
+												  		context: document.body
+													}).done(function(response) {
+														$("#ajaxcontainer").html(response);
+														$("#closequeue").show();
+														$("#openqueue").hide();
 													});
 										   });
 
@@ -143,6 +181,5 @@ $(document).ready(function() {
 														$("#ajaxcontainer").html(response);
 													});
 										   });
-
 	
 });

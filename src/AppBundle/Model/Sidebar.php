@@ -10,10 +10,14 @@ class Sidebar
 		$this->sidebarData = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/admin_sidebar.json'), true);
 	}
 	
-	public function generateSidebar()
+	public function displayOpenQueue()
 	{
-		$finalsidebar = 
-		return $this->sidebarData;
+		return true;
+	}
+	
+	public function displayDoctorIsIn()
+	{
+		return true;	
 	}
 }
 
