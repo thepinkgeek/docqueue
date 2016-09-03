@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Model;
+use AppBundle\Model\Database;
+
 class Roles
 {
 	public function __construct()
@@ -8,26 +10,38 @@ class Roles
 		
 	}
 	
-	public function getRole($username)
+	public function getRole($session)
 	{
-		/***
-		if($username == "")
-			return "";
-		else
-		{
-		**/
-			return "Admin";
-		//}
+        $role = $session->get("role");
+        $username = $session->get("username");
+
+        if($role === null || $role == "")
+        {
+            if($username == "")
+            {
+                return "Guest";
+            }
+            else
+            {
+                $db = new Database();
+                if($db->queryAdmin($username))
+                    return "Admin";
+                else
+                    return "User";
+            }
+        }
+
+        return $role;
 	}
 	
-	public function isAdmin($username)
+	public function isAdmin($session)
 	{
-		return $this->getRole($username) == "Admin";
+		return $this->getRole($session) == "Admin";
 	}
 	
-	public function isUser($username)
+	public function isUser($session)
 	{
-		$role = $this->getRole($username);
+		$role = $this->getRole($session);
 		return  $role == "User" || $role == "Admin";
 	}
 }

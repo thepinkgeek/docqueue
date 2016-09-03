@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Model\Roles;
+use AppBundle\Model\Database;
 
 class IndexController extends Controller
 {
@@ -27,10 +28,28 @@ class IndexController extends Controller
 		}
 	}
 	
+	/**
+	 * @Route("/index/setup")
+	 */
+	public function setup()
+	{
+		$db = new Database();	
+		
+		$db->createDb();
+		$db->createTablePatient();
+		$db->createTableMessages();
+		$db->createTableAdministrators();
+		$db->createTableDoctorOnDuty();
+		$db->createTableQueueStatus();
+		
+        return $this->render('default/index.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+        ]);
+	}
 	private function redirectUser()
 	{
 		$role = new Roles();
-		if($role->isAdmin($this->get("session")->get("username")))
+		if($role->isAdmin($this->get("session")))
 			return $this->redirect("/admin/index");
 		else
 			return $this->redirect("/user/index");
@@ -56,6 +75,8 @@ class IndexController extends Controller
 			{
 				$this->get("session")->set("displayname", $displayName);
 				$this->get("session")->set("username", $username);
+                $role = new Roles();
+                $this->get("session")->set("role", $role->getRole($this->get("session")));
 			}
 		}
 		

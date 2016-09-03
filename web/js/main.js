@@ -149,17 +149,35 @@ $(document).ready(function() {
 													});
 										   });
 	
-	$("#thedoctorisinsubmit").click(function(e){
-											 var location = $("#thedoctorisin").attr("goto"); 
-											 $.ajax({
-												  		url: location,
-												  		context: document.body
-													}).done(function(response) {
-														$("#ajaxcontainer").html(response);
-														$("#thedoctorisin").hide();
-														$("#thedoctorisout").show();
-													});
-										   });
+	$("section").delegate("#thedoctorisinsubmit", "click", function(e){
+																			e.preventDefault();
+																			console.log($('#thedoctorisinform').attr("action"));
+																			 $.ajax({
+																		            	type: 'post',
+																		            	url: $('#thedoctorisinform').attr("action"),
+																		            	data: $('#thedoctorisinform').serialize(),
+																		            	success: function(response)
+                                                                                        {
+                                                                                            $("#ajaxcontainer").html(response);
+                                                                                            $("#thedoctorisin").hide();
+                                                                                            $("#thedoctorisout").show();
+																		                }
+																			 })
+																		  });
+    $("section").delegate("#addadminsubmit", "click", function(e){
+																			e.preventDefault();
+																			console.log($('#addadminform').attr("action"));
+																			 $.ajax({
+																		            	type: 'post',
+																		            	url: $('#addadminform').attr("action"),
+																		            	data: $('#addadminform').serialize(),
+																		            	success: function(response)
+                                                                                        {
+                                                                                            $("#ajaxcontainer").html(response);
+																		                }
+																			 })
+																		  });
+
 
 	$("#thedoctorisout").click(function(e){
 											 var location = $("#thedoctorisout").attr("goto"); 
@@ -206,5 +224,5 @@ $(document).ready(function() {
 														$("#ajaxcontainer").html(response);
 													});
 										   });
-	
+
 });

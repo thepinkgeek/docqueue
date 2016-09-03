@@ -1,7 +1,7 @@
-<form action="" method="post">
+<form action="/admin/filldoctordetails" method="post" id="thedoctorisinform">
   <div class="form-group">
     <label for="doctorname">Doctor Name</label>
-    <input type="email" class="form-control" id="doctorname" placeholder="Enter doctor's name here." name="doctorname">
+    <input type="text" class="form-control" id="doctorname" placeholder="Enter doctor's name here." name="doctorname">
   </div>
   <div class="form-group">
     <label for="doctortime">Time From</label>
@@ -12,5 +12,5 @@
     <input data-provide="timepicker" type="datetime" class="form-control" id="doctortimeto" placeholder="Time" name="doctortimeto">
   </div>
 
-  <button type="submit" class="btn btn-default">Submit</button>
+  <button type="submit" class="btn btn-default" id="thedoctorisinsubmit">Submit</button>
 </form>

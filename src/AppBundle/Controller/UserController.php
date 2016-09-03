@@ -15,7 +15,8 @@ class UserController extends Controller
 	public function usersIndex()
 	{
 		$role = new Roles();
-		if(!$role->isUser($this->get("session")->get("username")))
+        var_dump($this->get("session")->get("role"));
+		if(!$role->isUser($this->get("session")))
 		{
 			$data = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/home_default.json'), true);
 			return $this->render("index.twig", $data);
@@ -36,7 +37,8 @@ class UserController extends Controller
 	public function adminIndex()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+        var_dump($this->get("session")->get("role"));
+		if(!$role->isAdmin($this->get("session")))
 		{
 			$data = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/home_default.json'), true);
 			return $this->render("index.twig", $data);
@@ -51,19 +53,19 @@ class UserController extends Controller
 		$this->getJsonFile("finishappointment.json", $finishappointmentsModal);
 		$tabledata = $this->populatePatientData();
 		$template_data = array_merge($sidebardata, $navigationData, $tabledata, $this->concatenateModals(array($finishappointmentsModal, $cancelappointmentsModal, $modalData)));
-		return $this->render("admin_index.twig", $template_data);
+		//return $this->render("admin_index.twig", $template_data);
 	}
 	
 	private function populatePatientData()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
 		$tabledata = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/patient_table_template.json'), true);
 		$db = new Database();
-		$db->queryAll('formatPatientData', $tabledata, "\AppBundle\Controller\UserController");
+		$db->queryAllPatient('formatPatientData', $tabledata, "\AppBundle\Controller\UserController");
 		return $tabledata;
 	}
 	
@@ -97,7 +99,7 @@ class UserController extends Controller
 	public function viewPatientQueue()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -135,7 +137,7 @@ class UserController extends Controller
 	public function addPatient()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -148,7 +150,7 @@ class UserController extends Controller
 	public function queryAppointment()
 	{
 		$role = new Roles();
-		if(!$role->isUser($this->get("session")->get("username")))
+		if(!$role->isUser($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -162,7 +164,7 @@ class UserController extends Controller
 	public function addAppointment()
 	{
 		$role = new Roles();
-		if(!$role->isUser($this->get("session")->get("username")))
+		if(!$role->isUser($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -175,8 +177,9 @@ class UserController extends Controller
 	public function addAppointmentSubmit()
 	{
 		$role = new Roles();
-		$username = $this->get("session")->get("username");
-		if(!$role->isUser($username))
+        $session = $this->get("session");
+		$username = $session->get("username");
+		if(!$role->isUser($session))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -185,7 +188,7 @@ class UserController extends Controller
 		$email = $this->generateUserEmail($username);
 		$name = $request->request->get("name");
 		$db = new Database();
-		$db->insert($name, $email);
+		$db->insertPatient($name, $email);
 		return $this->viewAppointment();
 	}
 	
@@ -195,7 +198,7 @@ class UserController extends Controller
 	public function adminAddAppointmentSubmit()
 	{
 		$role = new Roles();
-		if(!$role->isUser($this->get("session")->get("username")))
+		if(!$role->isUser($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -204,7 +207,7 @@ class UserController extends Controller
 		$email = $this->generateUserEmail($request->request->get("username"));
 		$name = $request->request->get("name");
 		$db = new Database();
-		$db->insert($name, $email);
+		$db->insertPatient($name, $email);
 		return $this->viewPatientQueue();
 	}
 	
@@ -219,7 +222,8 @@ class UserController extends Controller
 	public function cancelAppointment()
 	{
 		$role = new Roles();
-		$username = $this->get("session")->get("username");
+        $session = $this->get("session");
+		$username = $session->get("username");
 		if(!$role->isUser($username))
 		{
 			return $this->redirect("/index/index");
@@ -229,7 +233,7 @@ class UserController extends Controller
 		$email = $request->query->get("email");
 		$name = $request->query->get("name");
         $db = new Database();
-        $db->delete($name, $email);
+        $db->deletePatient($name, $email);
         $data = $this->populatePatientData();
         $this->sendCancelEmail($email);
         return $this->render("templates/table.twig", $data);
@@ -251,7 +255,7 @@ class UserController extends Controller
 	public function finishAppointment()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -261,7 +265,7 @@ class UserController extends Controller
 		$name = $request->query->get("name");
 
 		$db = new Database();
-		$db->delete($name, $email);
+		$db->deletePatient($name, $email);
 		$data = $this->populatePatientData();
 		$this->sendFinishEmail($email);
 		return $this->render("templates/table.twig", $data);
@@ -274,7 +278,7 @@ class UserController extends Controller
 	public function viewAppointment()
 	{
 		$role = new Roles();
-		if(!$role->isUser($this->get("session")->get("username")))
+		if(!$role->isUser($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -289,7 +293,7 @@ class UserController extends Controller
 	public function openQueue()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -302,7 +306,7 @@ class UserController extends Controller
 	public function closeQueue()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -315,7 +319,7 @@ class UserController extends Controller
 	public function resetQueue()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -332,13 +336,35 @@ class UserController extends Controller
 	public function doctorIsIn()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
 		
 		return $this->render('templates/thedoctorisin.twig');
 	}
+
+    /**
+     * @Route("/admin/filldoctordetails")
+     */
+    public function fillDoctorDetails()
+    {
+        $role = new Roles();
+		if(!$role->isAdmin($this->get("session")))
+		{
+			return $this->redirect("/index/index");
+		}
+		
+        $db = new Database();
+        $request = Request::createFromGlobals();
+		$name = $request->request->get("doctorname");
+		$timeFrom = $request->request->get("doctortimefrom");
+        $timeTo = $request->request->get("doctortimeto");
+        
+        $db->addDoctorEntry($name, $timeFrom, $timeTo);
+		return $this->viewPatientQueue();
+    }
+
 	
 	/**
 	 * @Route("/admin/thedoctorisout")
@@ -346,7 +372,7 @@ class UserController extends Controller
 	public function doctorIsOut()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -359,7 +385,7 @@ class UserController extends Controller
 	public function viewHistoryLog()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
@@ -373,12 +399,32 @@ class UserController extends Controller
 	public function addAdmin()
 	{
 		$role = new Roles();
-		if(!$role->isAdmin($this->get("session")->get("username")))
+		if(!$role->isAdmin($this->get("session")))
 		{
 			return $this->redirect("/index/index");
 		}
 		return $this->render("templates/addadmin.twig");
 	}
+
+    /**
+	 * @Route("/admin/insertadmin")
+	 */
+	public function insertAdmin()
+	{
+		$role = new Roles();
+		if(!$role->isAdmin($this->get("session")))
+		{
+			return $this->redirect("/index/index");
+		}
+        $request = Request::createFromGlobals();
+		$username = $request->request->get("username");
+
+        $db = new Database();
+        $db->addAdmin($username);
+
+        return $this->viewPatientQueue();
+	}
+
 	
 	/**
 	 * @Route("/admin/generatesidebar")

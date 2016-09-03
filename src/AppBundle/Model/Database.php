@@ -19,14 +19,14 @@ class Database
 		$this->dbname = "docqDB";
 	}
 
-	private function createDb() {
-		$conn = new \mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password']);
+	public function createDb() {
+		$conn = new \mysqli($this->servername, $this->username, $this->password);
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
 		}
 	
 		// Create database
-		$sql = "CREATE DATABASE IF NOT EXISTS " . $GLOBALS['dbname'];
+		$sql = "CREATE DATABASE IF NOT EXISTS " . $this->dbname;
 		if ($conn->query($sql) === FALSE) {
 			echo "Error creating/checking database: " . $conn->error;
 		}
@@ -34,8 +34,8 @@ class Database
 		$conn->close();
 	}
 	
-	private function createTable() {
-		$conn = new \mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	public function createTablePatient() {
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
 		}
@@ -54,7 +54,7 @@ class Database
 		$conn->close();
 	}
 	
-	public function insert($name, $email) {
+	public function insertPatient($name, $email) {
 		$rc = true;
 		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 		 
@@ -72,7 +72,7 @@ class Database
 	}
 	
 	
-	public function delete($name, $email) {
+	public function deletePatient($name, $email) {
 		$rc = true;
 		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 		 
@@ -89,7 +89,7 @@ class Database
 		return $rc;
 	}
 	
-	public function queryAll($callBack, &$context, $className) {
+	public function queryAllPatient($callBack, &$context, $className) {
 		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 	
 		if ($conn->connect_error) {
@@ -111,7 +111,7 @@ class Database
 		$conn->close();
 	}
 	
-	public function query($name, $email) {
+	public function queryPatient($name, $email) {
 		$rc = null;
 		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 	
@@ -130,7 +130,7 @@ class Database
 		return $rc;
 	}
 	
-	public function queryTop() {
+	public function queryTopPatient() {
 		$rc = null;
 		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 	
@@ -199,7 +199,7 @@ class Database
 		return $result;
 	}
 	
-	public function addDoctorEntry($name, $time)
+	public function addDoctorEntry($name, $timeFrom, $timeTo)
 	{
 		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 	
@@ -207,10 +207,12 @@ class Database
 			die("Connection failed: " . $conn->connect_error);
 		}
 	
-		$sql = "INSERT INTO Doctoronduty (name, time)
-          VALUES ('". $name . "', '" . $time. "')";
+		$sql = "INSERT INTO DoctorOnDuty (name, timeFrom, timeTo)
+          VALUES ('". $name . "', '" . $timeFrom. "', '" . $timeTo. "')";
 
 		$result = $conn->query($sql);
+
+        var_dump($result);
 		$conn->close();
 		
 		return $result;
@@ -226,7 +228,7 @@ class Database
 		}
 	
 		// delete a record
-		$sql = "DELETE FROM Queuestatus WHERE id in (SELECT id FROM Queuestatus LIMIT 1)";
+		$sql = "DELETE FROM QueueStatus WHERE id in (SELECT id FROM Queuestatus LIMIT 1)";
 	
 		$rc = $conn->query($sql);
 		$conn->close();
@@ -244,7 +246,7 @@ class Database
 		}
 	
 		// delete a record
-		$sql = "DELETE FROM Doctoronduty WHERE id in (SELECT id FROM Doctoronduty LIMIT 1)";
+		$sql = "DELETE FROM DoctorOnDuty WHERE id in (SELECT id FROM DoctorOnDuty LIMIT 1)";
 	
 		$rc = $conn->query($sql);
 		$conn->close();
@@ -280,8 +282,7 @@ class Database
 			die("Connection failed: " . $conn->connect_error);
 		}
 	
-		$sql = "INSERT INTO Administrators (username)
-          VALUES ('". $username . "')";
+		$sql = "INSERT INTO Administrators (username) VALUES ('". $username . "')";
 
 		$result = $conn->query($sql);
 		$conn->close();
@@ -289,5 +290,163 @@ class Database
 		return $result;
 
 	}
+	
+	public function createTableMessages() {
+		$conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		// create table
+		$sql = "CREATE TABLE IF NOT EXISTS Messages ( id INT(6) UNSIGNED PRIMARY KEY,
+							      subject VARCHAR(512),
+							      message VARCHAR(1024)
+							    )";
+	
+		if ($conn->query($sql) === FALSE) {
+			echo "Error creating table: " . $conn->error;
+		}
+	
+		$conn->close();
+	}
+	
+	public function insertMessage($messageId, $subject, $customMessage) {
+
+		$conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		 
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+		 
+		$sql = "INSERT INTO Messages (id, subject, message)
+          VALUES ('". $messageId . "', '" . $subject . "', '" . $customMessage . "')
+		  ON DUPLICATE KEY UPDATE subject='". $subject . "', message='" . $customMessage ."' ";
+	
+		if ($conn->query($sql) === TRUE) {
+			echo "New custom message created successfully";
+		} else {
+			echo "Error: " . $sql . "<br>" . $conn->error;
+		}
+	
+		$conn->close();
+	}
+	
+	public function deleteMessage($messageId) {
+		$conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		 
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		// delete a record
+		$sql = "DELETE FROM Messages WHERE id=" . $messageId;
+	
+		if ($conn->query($sql) === TRUE) {
+			echo "Record deleted successfully";
+		} else {
+			echo "Error deleting record: " . $conn->error;
+		}
+	
+		$conn->close();
+	}
+	
+	public function queryMessage($messageId) {
+		$conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "SELECT * from Messages WHERE id=". $messageId;
+	
+		$result = $conn->query($sql);
+	
+		if ($result->num_rows > 0) {
+			echo "Query successful";
+		} else {
+			echo "Query failed";
+		}
+		 
+		$conn->close();
+		 
+		return $result;
+	}
+	
+	public function createTableAdministrators()
+	{
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		// create table
+		$sql = "CREATE TABLE IF NOT EXISTS Administrators (
+  			    id int(11) NOT NULL AUTO_INCREMENT,
+  				`username` varchar(30) NOT NULL,
+				 PRIMARY KEY (id)) AUTO_INCREMENT=1;";
+	
+		if ($conn->query($sql) === FALSE) {
+			echo "Error creating table: " . $conn->error;
+		}
+		$conn->close();
+	}
+	
+	public function createTableDoctorOnDuty()
+	{
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+
+		$sql = "CREATE TABLE IF NOT EXISTS DoctorOnDuty (
+			    id int(11) NOT NULL AUTO_INCREMENT,
+				name varchar(100) NOT NULL,
+				time time NOT NULL, PRIMARY KEY (id) ) AUTO_INCREMENT=1;";
+		
+		if ($conn->query($sql) === FALSE) {
+			echo "Error creating table: " . $conn->error;
+		}
+		$conn->close();
+	}
+	
+	public function createTableQueueStatus()
+	{
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+		
+		$sql = "CREATE TABLE IF NOT EXISTS QueueStatus (
+				id int(11) NOT NULL AUTO_INCREMENT,
+				status varchar(20) NOT NULL,
+				timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  				PRIMARY KEY (id)) AUTO_INCREMENT=1;";
+		
+		if ($conn->query($sql) === FALSE) {
+			echo "Error creating table: " . $conn->error;
+		}
+		$conn->close();
+
+	}
+
+    public function queryAdmin($username) 
+    {
+        $conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+
+        $sql = "SELECT username FROM Administrators WHERE username = \"$username\"";
+		$result = $conn->query($sql);
+
+        $isAdmin = false;
+        if($result == true)
+        {
+            $isAdmin = $result ->num_rows > 0;
+        }
+        $conn->close();
+
+        return $isAdmin;
+    }
 }
 ?>
