@@ -2,26 +2,24 @@
  * 
  */
 $(document).ready(function() {
-	$("#dependentname").show();
+	$.ajax({
+				url: "/admin/loadComponentsToHide",
+				dataType: 'json',
+				success: function(response)
+				{
+					var componentList = response["components"];
+					console.log(componentList);
+					
+					for(var component in componentList)
+					{
+						$("#" + componentList[component]).hide();
+					}
+				}
+			});
+
 	$("section").delegate("#dependentYes", "click", function(e){ $("#dependentname").show(); });
 	$("section").delegate("#dependentNo", "click", function(e){ $("#dependentname").hide(); });
-	$("section").delegate("#dependentYesAdmin", "click", function(e){
-																		$("#addpatientemail").hide();
-																	});
-    /***
-
-	$("#cancelappointmentconfirm").on("show.bs.modal", function(event) {
-																		var link = $("#" + event.relatedTarget.id).attr("goto");
-																		console.log(link);
-                                                                        console.log(event);
-																	   });
-	$("#finishappointmentconfirm").on("show.bs.modal", function(event) {
-																		var link = $("#" + event.relatedTarget.id).attr("goto");
-																		console.log(link);
-                                                                        console.log(event);
-																	   });
-    ***/
-
+	
 	$("section").delegate(".finish", "click", function(e){
 															e.preventDefault();
                                                             $("#finishappointmentconfirm-confirmyes").attr("goto",
@@ -69,13 +67,8 @@ $(document).ready(function() {
 															$("#cancelappointmentconfirm").modal().show();
 														 });
 
-	$("section").delegate("#dependentNoAdmin", "click", function(e){
-																		$("#addpatientemail").show();
-																   });
-
 	$("section").delegate("#appointmentsubmitbutton", "click", function(e){
 																			e.preventDefault();
-																			console.log($('#addappointmentform').attr("action"));
 																			 $.ajax({
 																		            	type: 'post',
 																		            	url: $('#addappointmentform').attr("action"),
@@ -125,7 +118,6 @@ $(document).ready(function() {
 												  		context: document.body
 													}).done(function(response) {
 														$("#ajaxcontainer").html(response);
-														$("#addpatientemail").hide();
 													});
 										   });
 
@@ -217,6 +209,16 @@ $(document).ready(function() {
 
 	$("#addadmin").click(function(e){
 											 var location = $("#addadmin").attr("goto"); 
+											 $.ajax({
+												  		url: location,
+												  		context: document.body
+													}).done(function(response) {
+														$("#ajaxcontainer").html(response);
+													});
+										   });
+
+	$("#viewadmin").click(function(e){
+											 var location = $("#viewadmin").attr("goto"); 
 											 $.ajax({
 												  		url: location,
 												  		context: document.body

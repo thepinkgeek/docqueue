@@ -111,6 +111,28 @@ class Database
 		$conn->close();
 	}
 	
+	public function queryPatientAppointments($callBack, &$context, $className, $email) {
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "SELECT id, name, email FROM Patient WHERE email=\"$email\"";
+		$result = $conn->query($sql);
+		if ($result ->num_rows > 0) {
+			$index = 0;
+			while($row = $result->fetch_assoc())
+			{
+				$row["isFirst"] = $index == 0;
+				call_user_func_array($className."::$callBack", array(&$context, $row));
+				$index++;
+			}
+		}
+
+		$conn->close();
+	}
+	
 	public function queryPatient($name, $email) {
 		$rc = null;
 		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
@@ -228,7 +250,7 @@ class Database
 		}
 	
 		// delete a record
-		$sql = "DELETE FROM QueueStatus WHERE id in (SELECT id FROM Queuestatus LIMIT 1)";
+		$sql = "DELETE FROM QueueStatus";
 	
 		$rc = $conn->query($sql);
 		$conn->close();
@@ -246,7 +268,7 @@ class Database
 		}
 	
 		// delete a record
-		$sql = "DELETE FROM DoctorOnDuty WHERE id in (SELECT id FROM DoctorOnDuty LIMIT 1)";
+		$sql = "DELETE FROM DoctorOnDuty";
 	
 		$rc = $conn->query($sql);
 		$conn->close();
@@ -289,6 +311,22 @@ class Database
 		
 		return $result;
 
+	}
+	
+	public function removeAdmin($username)
+	{
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "DELETE FROM Administrators WHERE username=\"$username\"";
+
+		$result = $conn->query($sql);
+		$conn->close();
+		
+		return $result;
 	}
 	
 	public function createTableMessages() {
@@ -401,7 +439,9 @@ class Database
 		$sql = "CREATE TABLE IF NOT EXISTS DoctorOnDuty (
 			    id int(11) NOT NULL AUTO_INCREMENT,
 				name varchar(100) NOT NULL,
-				time time NOT NULL, PRIMARY KEY (id) ) AUTO_INCREMENT=1;";
+				timeFrom varchar(50) NOT NULL,
+				timeTo varchar(50) NOT NULL,
+				PRIMARY KEY (id) ) AUTO_INCREMENT=1;";
 		
 		if ($conn->query($sql) === FALSE) {
 			echo "Error creating table: " . $conn->error;
@@ -448,5 +488,27 @@ class Database
 
         return $isAdmin;
     }
+    
+    public function queryAllAdmin($callBack, &$context, $className) {
+		$conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+	
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	
+		$sql = "SELECT id, username FROM Administrators";
+		$result = $conn->query($sql);
+		if ($result ->num_rows > 0) {
+			$index = 0;
+			while($row = $result->fetch_assoc())
+			{
+				$row["isFirst"] = $index == 0;
+				call_user_func_array($className."::$callBack", array(&$context, $row));
+				$index++;
+			}
+		}
+
+		$conn->close();
+	}
 }
 ?>

@@ -15,16 +15,17 @@ class IndexController extends Controller
 	/**
 	 * @Route("/index/index")
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		if($this->get("session")->get("displayname") == "")
+		$session = $request->getSession();
+		if($session->get("username") == "")
 		{
 			$data = json_decode(file_get_contents($this->get('kernel')->getRootDir().'/Resources/json/home_default.json'), true);
 			return $this->render("index.twig", $data);
 		}
 		else
 		{
-			return $this->redirectUser();
+			return $this->redirectUser($request);
 		}
 	}
 	
@@ -46,10 +47,10 @@ class IndexController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
 	}
-	private function redirectUser()
+	private function redirectUser(Request $request)
 	{
 		$role = new Roles();
-		if($role->isAdmin($this->get("session")))
+		if($role->isAdmin($request->getSession()))
 			return $this->redirect("/admin/index");
 		else
 			return $this->redirect("/user/index");
@@ -58,11 +59,11 @@ class IndexController extends Controller
 	/**
 	 * @Route("/index/login")
 	 */
-	public function login()
+	public function login(Request $request)
 	{
-		if($this->get("session")->get("username") == "")
+		$session = $request->getSession();
+		if($session->get("username", "") == "")
 		{
-			$request = Request::createFromGlobals();
 			$username = $request->request->get("username");
 			$password = $request->request->get("password");
 
@@ -73,26 +74,27 @@ class IndexController extends Controller
 			}
 			else
 			{
-				$this->get("session")->set("displayname", $displayName);
-				$this->get("session")->set("username", $username);
+				$session->set("displayname", $displayName);
+				$session->set("username", $username);
                 $role = new Roles();
-                $this->get("session")->set("role", $role->getRole($this->get("session")));
+                $session->set("role", $role->getRole($session));
+                $session->start();
 			}
 		}
 		
-		return $this->redirectUser();
+		return $this->redirectUser($request);
 	}
 	
 	/**
 	 * @Route("/index/logout") 
 	 */
-	public function logout()
+	public function logout(Request $request)
 	{
-		if($this->get("session")->get("displayname") != "")
+		$session = $request->getSession();
+		if($session->get("displayname") != "")
 		{
-			echo "invalidating session";
-			$this->get("session")->clear();
-			$this->get("session")->invalidate();
+			$session->clear();
+			$session->invalidate();
 		}
 		
 		return $this->redirect("/index/index");
@@ -150,5 +152,4 @@ class IndexController extends Controller
 		return $displayname;
 	}
 }
-
 ?>

@@ -69,7 +69,14 @@
 								"id" : "maintenance",
 								"subItems" : [
 												{
-													"name" : "Add Administrators",
+													"name" : "View Administrators",
+													"href" : "#",
+													"class" : "",
+													"id" : "viewadmin",
+													"goto" : "/admin/viewadminlist"
+												},
+												{
+													"name" : "Add Administrator",
 													"href" : "#",
 													"class" : "",
 													"id" : "addadmin",
@@ -82,7 +89,7 @@
 													"id" : "historylogs",
 													"goto" : "/admin/historylog"
 												}
-										 	 ]
+											 ]
 							}
 					]
 }

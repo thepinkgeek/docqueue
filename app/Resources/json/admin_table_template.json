@@ -1,0 +1,17 @@
+{
+	"labels" : [
+					{ "name" : "Patients in Queue" }
+			   ],
+	"table" : {
+				"headers" : [
+								{ "name" : "#" },
+								{ "name" : "Username" },
+								{
+									"name" : "",
+									"span" : 1
+								}
+							],
+				"rows": [
+						]
+			  }
+}
